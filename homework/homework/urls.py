@@ -1,3 +1,6 @@
+from users.views import UserCreateView
+from users.views import UserDeleteView
+
 from django.contrib import admin
 from django.urls import path, include
 
@@ -6,7 +9,7 @@ from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 from rest_framework.authtoken.views import obtain_auth_token
 
-from users.views import UserView
+
 
 ...
 
@@ -22,7 +25,9 @@ schema_view = get_schema_view(
 urlpatterns = [
     path('admin/', admin.site.urls),
 
-    path('api/users/', UserView.as_view(), name='user-api'),
+    path('api/users/', UserCreateView.as_view(), name='user-api'),
+    path('api/users/<int:pk>/', UserDeleteView.as_view(), name='user-delete'),
+
     path('api-auth/', include('rest_framework.urls')),
     path('api-token-auth/', obtain_auth_token, name='api-token-auth'),
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),

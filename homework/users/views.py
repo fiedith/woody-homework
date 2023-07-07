@@ -6,8 +6,10 @@ from .models import User
 from .serializers import UserSerializer
 
 # User requirement: create, delete
-class UserView(APIView):
-     # create user
+
+# create user
+class UserCreateView(APIView):
+
     @swagger_auto_schema(request_body=UserSerializer, operation_id="Create user")
     def post(self, request):
         serializer = UserSerializer(data=request.data)
@@ -18,6 +20,7 @@ class UserView(APIView):
         return JsonResponse(serializer.errors, status=404)
 
     # delete user
+class UserDeleteView(APIView):
     @swagger_auto_schema(operation_id="Delete user")
     def delete(self, request, pk):
         user = User.objects.get(pk=pk)
